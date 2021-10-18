@@ -15,6 +15,10 @@ body {
   transition: 0.4 ease-out;
 }
 
+.App.warm {
+  background-image: url('assets/warm-bg.jpg');
+}
+
 main {
   min-height: 100vh;
 }

@@ -1,3 +1,5 @@
+import useState from 'react';
+
 const api = {
   appid: "829d271e53fae81c080d42ac41c9890e",
   id: "524901",
@@ -6,6 +8,18 @@ const api = {
 
 
 function App() {
+  const [query, setQuery] = useState('');
+  const [weather, setWeather] = useState({});
+
+  // rebuild after using async/await
+  const search = (evt) => {
+    if (evt.key === 'Enter') {
+      fetch(`${api.base}id=${id}&appip=${appid}`)
+        .then(res => res.json())
+        .then(result => setWeather(result))
+    }
+  }
+
 
   const dateBuilder = (d) => {
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -23,7 +37,14 @@ function App() {
     <div className="App">
       <main>
         <div className="search-box">
-          <input type="text" className="search-bar" placeholder="Search..."></input>
+          <input 
+              type="text" 
+              className="search-bar" 
+              placeholder="Search..."
+              onChange={e => setQuery(e.target.value)}
+              value={query}
+              onKeyPress={search} 
+          />
         </div>
         <div className="location-box">
           <div className="location">Toronto, Ontario, Canada</div>

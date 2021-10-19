@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const api = {
   appid: "829d271e53fae81c080d42ac41c9890e",
   id: "524901",
-  base: "https://api.openweathermap.org/data/2.5/forecast?"
+  base: "https://api.openweathermap.org/data/2.5/weather?q="
 }
 
 
@@ -14,7 +14,7 @@ function App() {
   // rebuild after using async/await
   const search = (evt) => {
     if (evt.key === 'Enter') {
-      fetch(`${api.base}id=${api.id}&appid=${api.appid}`)
+      fetch(`${api.base}${query}&units=metric&appid=${api.appid}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
@@ -50,14 +50,18 @@ function App() {
               onKeyPress={search} 
           />
         </div>
-        <div className="location-box">
-          <div className="location">Toronto, Ontario, Canada</div>
-          <div className="date">{dateBuilder(new Date())}</div>
-        </div>
-        <div className="weather-box">
-          <div className="temp">15°c</div>     
-          <div className="weather">Sunny</div>   
-        </div>
+        {(typeof weather.main != 'undefined') ? (
+          <div>
+            <div className="location-box">
+              <div className="location">{weather.name}, {weather.sys.country}</div>
+              <div className="date">{dateBuilder(new Date())}</div>
+            </div>
+            <div className="weather-box">
+              <div className="temp">{Math.round(weather.main.temp)}°c</div>     
+              <div className="weather">{weather.weather[0].main}</div>   
+            </div>
+          </div>
+        ) : ('')}
       </main>
     </div>
   );

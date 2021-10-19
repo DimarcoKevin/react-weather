@@ -16,7 +16,12 @@ function App() {
     if (evt.key === 'Enter') {
       fetch(`${api.base}id=${id}&appip=${appid}`)
         .then(res => res.json())
-        .then(result => setWeather(result))
+        .then(result => {
+          setWeather(result);
+          setQuery('');
+        })
+        
+        
     }
   }
 

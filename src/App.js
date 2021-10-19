@@ -1,9 +1,9 @@
-import useState from 'react';
+import React, { useState } from 'react';
 
 const api = {
   appid: "829d271e53fae81c080d42ac41c9890e",
   id: "524901",
-  base: "https://www.api.openweathermap.org/data/2.5/forecast?"
+  base: "https://api.openweathermap.org/data/2.5/forecast?"
 }
 
 
@@ -14,14 +14,13 @@ function App() {
   // rebuild after using async/await
   const search = (evt) => {
     if (evt.key === 'Enter') {
-      fetch(`${api.base}id=${id}&appip=${appid}`)
+      fetch(`${api.base}id=${api.id}&appid=${api.appid}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
           setQuery('');
+          console.log(result);
         })
-        
-        
     }
   }
 
